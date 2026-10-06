@@ -1,4 +1,4 @@
-name: Build iOS IPA (zh-CN, unsigned)
+name: Build iOS IPA (zh-CN, red icon, enhanced)
 
 on:
   push:
@@ -54,10 +54,12 @@ jobs:
           rm -rf Payload
           mkdir -p Payload
           cp -R build/ios/iphoneos/Runner.app Payload/
-          zip -qry NekokoLPA2-zh.ipa Payload
-          ls -la NekokoLPA2-zh.ipa
-          shasum -a 256 NekokoLPA2-zh.ipa | tee sha256.txt
-          unzip -l NekokoLPA2-zh.ipa | head -20 | tee -a build.log
+          IPA="NekokoLPA2-2.2.6-增强版-红图标-简体中文.ipa"
+          zip -qry "$IPA" Payload
+          ls -la "$IPA"
+          shasum -a 256 "$IPA" | tee sha256.txt
+          echo "IPA_NAME=$IPA" >> "$GITHUB_ENV"
+          unzip -l "$IPA" | head -20 | tee -a build.log
 
       - name: Publish artifacts as a public release (downloadable without auth)
         if: always()
@@ -68,8 +70,8 @@ jobs:
           TAG="nlpa2-zh-${{ github.run_number }}"
           gh release create "$TAG" --title "$TAG" --notes "automated build #${{ github.run_number }}" || true
           gh release upload "$TAG" build.log --clobber || true
-          if [ -f NekokoLPA2-zh.ipa ]; then
-            gh release upload "$TAG" NekokoLPA2-zh.ipa sha256.txt --clobber || true
+          if [ -n "$IPA_NAME" ] && [ -f "$IPA_NAME" ]; then
+            gh release upload "$TAG" "$IPA_NAME" sha256.txt --clobber || true
           fi
           TAIL="$(tail -c 4000 build.log 2>/dev/null || echo 'no log')"
           gh release edit "$TAG" --notes "build #${{ github.run_number }}
@@ -78,4 +80,3 @@ jobs:
           \`\`\`
           $TAIL
           \`\`\`" || true
-# build trigger
