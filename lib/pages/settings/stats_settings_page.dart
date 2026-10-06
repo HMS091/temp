@@ -21,13 +21,17 @@ class _StatsSettingsPageState extends State<StatsSettingsPage> {
         final settings = AppSettings();
         return StyledHeaderScaffold(
           title: 'Nekoko Cloud',
-          subtitle: 'Help improve compatibility and size prediction',
+          subtitle: '帮助改进兼容性与容量预测',
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildSectionHeader(context, "STATISTICS COLLECTION"),
+                _buildSectionHeader(context, "隐私 / PRIVACY"),
+                const SizedBox(height: 16),
+                _buildEnhancerToggle(context, settings),
+                const SizedBox(height: 24),
+                _buildSectionHeader(context, "统计收集"),
                 const SizedBox(height: 16),
                 _buildMainToggle(context, settings),
                 const SizedBox(height: 16),
@@ -35,7 +39,7 @@ class _StatsSettingsPageState extends State<StatsSettingsPage> {
                 const SizedBox(height: 24),
                 _buildInfoBox(
                   context,
-                  "Nekoko Cloud collect anonymized installation statistics to help better predict the profile size and compatibility issues. Size prediction will no longer be available when this is turned off. Only installation-related data will be collected, and it does not contain any personal information and will be anonymized.",
+                  "启用后会上传安装相关数据，用于改进容量预测和兼容性判断。关闭后将失去容量预测功能。\n\n注意：实际上报内容包含卡号(ICCID)、EID 及卡片鉴权响应等技术数据，并非匿名；官方隐私政策亦确认服务器会保留 ICCID 与 EID。介意的话请保持此开关关闭。",
                 ),
               ],
             ),
@@ -60,6 +64,24 @@ class _StatsSettingsPageState extends State<StatsSettingsPage> {
     );
   }
 
+  Widget _buildEnhancerToggle(BuildContext context, AppSettings settings) {
+    final theme = Theme.of(context);
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppTheme.surfaceSubtle(context)),
+      ),
+      child: _buildSwitchRow(
+        context,
+        title: "档案状态增强",
+        subtitle: "允许向运营商查询卡片状态（会发送 ICCID）。关闭后不再对外发送卡号。",
+        value: settings.enableProfileStatusEnhancer,
+        onChanged: (v) => settings.setEnableProfileStatusEnhancer(v),
+      ),
+    );
+  }
+
   Widget _buildMainToggle(BuildContext context, AppSettings settings) {
     final theme = Theme.of(context);
     return Container(
@@ -70,8 +92,8 @@ class _StatsSettingsPageState extends State<StatsSettingsPage> {
       ),
       child: _buildSwitchRow(
         context,
-        title: "Enable Nekoko Cloud",
-        subtitle: "Contribute to database improvement",
+        title: "启用 Nekoko Cloud 统计",
+        subtitle: "上报安装数据以改进数据库（会上传 ICCID/EID）",
         value: settings.enableNekokoStats,
         onChanged: (v) => settings.setEnableNekokoStats(v),
       ),
@@ -92,8 +114,8 @@ class _StatsSettingsPageState extends State<StatsSettingsPage> {
         children: [
           _buildSwitchRow(
             context,
-            title: "Estimate Profile Size",
-            subtitle: "Predict storage usage for installed profiles",
+            title: "估算档案容量",
+            subtitle: "预测已安装档案的存储占用",
             value: settings.estimateProfileSize,
             onChanged: (v) => settings.setEstimateProfileSize(v),
             isDisabled: !enabled,
@@ -166,7 +188,7 @@ class _StatsSettingsPageState extends State<StatsSettingsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Clear Icon Cache",
+                      "清除图标缓存",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -207,7 +229,7 @@ class _StatsSettingsPageState extends State<StatsSettingsPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: const Text('取消'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
@@ -228,7 +250,7 @@ class _StatsSettingsPageState extends State<StatsSettingsPage> {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Icon cache cleared successfully'),
+              content: Text('图标缓存已清除'),
               duration: Duration(seconds: 2),
             ),
           );
@@ -237,7 +259,7 @@ class _StatsSettingsPageState extends State<StatsSettingsPage> {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Failed to clear cache: $e'),
+              content: Text('清除缓存失败：$e'),
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );

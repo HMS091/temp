@@ -15,11 +15,11 @@ class _ProfileInstallationDialogState extends State<ProfileInstallationDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Install eSIM Profile'),
+      title: const Text('安装 eSIM 档案'),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text('You have a pending profile to install:'),
+            Text('有一个待安装的档案：'),
             const SizedBox(height: 8),
             Text(
               widget.lpaCode,
@@ -32,13 +32,13 @@ class _ProfileInstallationDialogState extends State<ProfileInstallationDialog> {
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 16),
-            const Text('Would you like to install it now?'),
+            const Text('是否现在安装？'),
           ],
         ),
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text('Install Later'),
+          child: const Text('稍后安装'),
           onPressed: () {
             // Dismiss dialog but KEEP state (so it re-appears later)
             // To prevent it appearing immediately again in this session, we might need a "snooze" mechanism in Service.
@@ -55,7 +55,7 @@ class _ProfileInstallationDialogState extends State<ProfileInstallationDialog> {
           },
         ),
         FilledButton(
-          child: const Text('Install Now'),
+          child: const Text('立即安装'),
           onPressed: () {
             // Dismiss dialog
             Navigator.of(context).pop();

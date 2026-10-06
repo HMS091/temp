@@ -105,7 +105,7 @@ class NBridgeService {
       if (lower.contains('invocationtargetexception')) {
         throw AppException(
           AppErrorCode.ERROR_CHANNEL_OPEN_FAILED,
-          message: 'NBridge $method failed transiently: $errorMessage',
+          message: 'NBridge $method 暂时失败：$errorMessage',
           originalError: result,
         );
       }

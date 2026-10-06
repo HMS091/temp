@@ -788,5 +788,7 @@
   "imeiDigits": "TAC or IMEI digits",
   "importAction": "Import",
   "qrtrReaderTitle": "Qualcomm modem (QRTR)",
-  "qrtrReaderSubtitle": "Qualcomm's low-level modem protocol (requires Shizuku)"
+  "qrtrReaderSubtitle": "Qualcomm's low-level modem protocol (requires Shizuku)",
+  "profileStatusEnhancer": "Profile status enhancer",
+  "profileStatusEnhancerSubtitle": "Look up card status from your carrier (sends the ICCID). Turn off to stop sending your card number."
 }

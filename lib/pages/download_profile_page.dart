@@ -2006,9 +2006,9 @@ class _DownloadProfilePageState extends State<DownloadProfilePage> {
         }
       }
     } catch (e) {
-      _log.severe('Export error: $e');
+      _log.severe('导出失败：$e');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Export error: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('导出失败：$e')));
       }
     }
   }

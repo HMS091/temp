@@ -284,8 +284,8 @@ class SettingsPage extends StatelessWidget {
                           color: Colors.red,
                         ),
                       ),
-                      title: 'Redaction',
-                      subtitle: 'Control on-screen privacy for profile data',
+                      title: '脱敏',
+                      subtitle: '控制界面上档案数据的隐私显示',
                       child: Icon(
                         Icons.chevron_right,
                         color: AppTheme.onSurfaceVerySubtle(context),

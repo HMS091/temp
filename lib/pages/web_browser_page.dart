@@ -51,7 +51,7 @@ class _WebBrowserPageState extends State<WebBrowserPage> {
     // Optional: Show snackbar
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('LPA Code detected. Check pending installation.'),
+        content: Text('已识别 LPA 激活码，请查看待安装列表。'),
       ),
     );
   }
@@ -528,7 +528,7 @@ class _WebBrowserPageState extends State<WebBrowserPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Signing failed: $e'),
+            content: Text('签名失败：$e'),
             backgroundColor: Colors.red,
           ),
         );
@@ -600,7 +600,7 @@ class _WebBrowserPageState extends State<WebBrowserPage> {
                 onPressed: () {
                   _controller.loadRequest(Uri.parse(widget.initialUrl));
                 },
-                tooltip: 'Home',
+                tooltip: '主页',
                 visualDensity: VisualDensity.compact,
               ),
               IconButton(
@@ -609,7 +609,7 @@ class _WebBrowserPageState extends State<WebBrowserPage> {
                   color: AppTheme.onSurfaceSubtle(context),
                 ),
                 onPressed: _openInBrowser,
-                tooltip: 'Open in system browser',
+                tooltip: '用系统浏览器打开',
                 visualDensity: VisualDensity.compact,
               ),
             ],
@@ -628,7 +628,7 @@ class _WebBrowserPageState extends State<WebBrowserPage> {
                       await _controller.goBack();
                     }
                   },
-                  tooltip: 'Back',
+                  tooltip: '后退',
                   visualDensity: VisualDensity.compact,
                 ),
                 const SizedBox(width: 4),
@@ -688,7 +688,7 @@ class _WebBrowserPageState extends State<WebBrowserPage> {
                   onPressed: () async {
                     await _controller.reload();
                   },
-                  tooltip: 'Reload',
+                  tooltip: '刷新',
                   visualDensity: VisualDensity.compact,
                 ),
               ],

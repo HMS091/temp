@@ -352,8 +352,8 @@ class NoReadersState extends StatelessWidget {
                         const SizedBox(height: 16),
                         _ConnectOptionCard(
                           icon: Icons.usb_rounded,
-                          title: 'Connect USB Reader',
-                          subtitle: 'WebUSB (SCRP Protocol)',
+                          title: '连接 USB 读卡器',
+                          subtitle: 'WebUSB（SCRP 协议）',
                           colors: const [Color(0xFF009688), Color(0xFF00796B)],
                           onTap: () async {
                             try {
@@ -376,7 +376,7 @@ class NoReadersState extends StatelessWidget {
                         _ConnectOptionCard(
                           icon: Icons.extension_rounded,
                           title: l10n.downloadExtension,
-                          subtitle: 'WebCard Browser Extension',
+                          subtitle: 'WebCard 浏览器扩展',
                           colors: const [Color(0xFFFF9800), Color(0xFFF57C00)],
                           onTap: () async {
                             final uri = Uri.parse(
@@ -394,7 +394,7 @@ class NoReadersState extends StatelessWidget {
                         _ConnectOptionCard(
                           icon: Icons.cloud_sync_rounded,
                           title: l10n.connectRemote,
-                          subtitle: 'Remote Cloud Reader',
+                          subtitle: '远程云端读卡器',
                           colors: const [Color(0xFF9C27B0), Color(0xFF7B1FA2)],
                           onTap: onConnectRemote,
                         ),

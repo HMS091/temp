@@ -1,0 +1,80 @@
+name: Build iOS IPA (zh-CN, unsigned)
+
+on:
+  push:
+    branches: [nlpa2-zh]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ios:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.2
+          cache: true
+
+      - name: Toolchain info
+        run: |
+          set -x
+          flutter --version || true
+          dart --version || true
+          xcodebuild -version || true
+          pod --version || true
+          rustc --version || true
+
+      - name: Flutter pub get
+        run: |
+          set -x
+          flutter pub get 2>&1 | tee build.log
+
+      - name: Build iOS (release, no codesign)
+        run: |
+          set -x
+          flutter build ios --release --no-codesign 2>&1 | tee -a build.log
+
+      - name: Fake-sign with ldid (TrollStore)
+        run: |
+          set -x
+          brew install ldid || true
+          APP=build/ios/iphoneos/Runner.app
+          ls -la "$APP" | head -30
+          ldid -S "$APP/Runner" || true
+          ldid -e "$APP/Runner" || true
+
+      - name: Package unsigned IPA
+        run: |
+          set -x
+          rm -rf Payload
+          mkdir -p Payload
+          cp -R build/ios/iphoneos/Runner.app Payload/
+          zip -qry NekokoLPA2-zh.ipa Payload
+          ls -la NekokoLPA2-zh.ipa
+          shasum -a 256 NekokoLPA2-zh.ipa | tee sha256.txt
+          unzip -l NekokoLPA2-zh.ipa | head -20 | tee -a build.log
+
+      - name: Publish artifacts as a public release (downloadable without auth)
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -x
+          TAG="nlpa2-zh-${{ github.run_number }}"
+          gh release create "$TAG" --title "$TAG" --notes "automated build #${{ github.run_number }}" || true
+          gh release upload "$TAG" build.log --clobber || true
+          if [ -f NekokoLPA2-zh.ipa ]; then
+            gh release upload "$TAG" NekokoLPA2-zh.ipa sha256.txt --clobber || true
+          fi
+          TAIL="$(tail -c 4000 build.log 2>/dev/null || echo 'no log')"
+          gh release edit "$TAG" --notes "build #${{ github.run_number }}
+          status: ${{ job.status }}
+
+          \`\`\`
+          $TAIL
+          \`\`\`" || true

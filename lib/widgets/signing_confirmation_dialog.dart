@@ -186,7 +186,7 @@ class _SigningConfirmationDialogState extends State<SigningConfirmationDialog> {
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Signing failed: $e'),
+            content: Text('签名失败：$e'),
             backgroundColor: Colors.red,
           ),
         );

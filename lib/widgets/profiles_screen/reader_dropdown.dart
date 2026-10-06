@@ -64,7 +64,7 @@ Widget buildReaderDropdown({
                     Clipboard.setData(ClipboardData(text: eid));
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('EID copied to clipboard'),
+                        content: Text('EID 已复制到剪贴板'),
                         duration: Duration(seconds: 1),
                       ),
                     );

@@ -18,13 +18,13 @@ class RedactionSettingsPage extends StatelessWidget {
       builder: (context, _) {
         return StyledHeaderScaffold(
           title: 'Redaction',
-          subtitle: 'Control what the app reveals on screen',
+          subtitle: '控制界面上显示哪些内容',
           body: ListView(
             padding: const EdgeInsets.all(20),
             children: [
               _buildSection(
                 context,
-                title: 'Identifiers',
+                title: '标识符',
                 children: [
                   _buildSegmentPreviewTile(
                     context,
@@ -32,17 +32,17 @@ class RedactionSettingsPage extends StatelessWidget {
                     preview: ProfileRedaction.redactEidPreview(_sampleEid),
                     toggles: [
                       _SegmentToggle(
-                        label: 'First 8',
+                        label: '前 8 位',
                         value: AppSettings().redactEidFirst,
                         onChanged: AppSettings().setRedactEidFirst,
                       ),
                       _SegmentToggle(
-                        label: 'Mid 16',
+                        label: '中 16 位',
                         value: AppSettings().redactEidMiddle,
                         onChanged: AppSettings().setRedactEidMiddle,
                       ),
                       _SegmentToggle(
-                        label: 'Last 10',
+                        label: '后 10 位',
                         value: AppSettings().redactEidLast,
                         onChanged: AppSettings().setRedactEidLast,
                       ),
@@ -54,17 +54,17 @@ class RedactionSettingsPage extends StatelessWidget {
                     preview: ProfileRedaction.redactIccidPreview(_sampleIccid),
                     toggles: [
                       _SegmentToggle(
-                        label: 'First 8',
+                        label: '前 8 位',
                         value: AppSettings().redactIccidFirst,
                         onChanged: AppSettings().setRedactIccidFirst,
                       ),
                       _SegmentToggle(
-                        label: 'Mid 6',
+                        label: '中 6 位',
                         value: AppSettings().redactIccidMiddle,
                         onChanged: AppSettings().setRedactIccidMiddle,
                       ),
                       _SegmentToggle(
-                        label: 'Last 6',
+                        label: '后 6 位',
                         value: AppSettings().redactIccidLast,
                         onChanged: AppSettings().setRedactIccidLast,
                       ),
@@ -75,11 +75,11 @@ class RedactionSettingsPage extends StatelessWidget {
               const SizedBox(height: 24),
               _buildSection(
                 context,
-                title: 'Profile Content',
+                title: '档案内容',
                 children: [
                   _buildDropdownTile<FlagRedactionMode>(
                     context,
-                    title: 'Fake Profile',
+                    title: '伪造档案',
                     value: AppSettings().flagRedactionMode,
                     items: const {
                       FlagRedactionMode.none: 'No redaction',
@@ -101,7 +101,7 @@ class RedactionSettingsPage extends StatelessWidget {
                   ),
                   _buildDropdownTile<OperatorRedactionMode>(
                     context,
-                    title: 'Redact Carrier',
+                    title: '隐藏运营商',
                     value: AppSettings().operatorRedactionMode,
                     items: const {
                       OperatorRedactionMode.none: 'No redaction',
@@ -111,7 +111,7 @@ class RedactionSettingsPage extends StatelessWidget {
                   ),
                   _buildDropdownTile<TagsRedactionMode>(
                     context,
-                    title: 'Tags',
+                    title: '标签',
                     value: AppSettings().tagsRedactionMode,
                     items: const {
                       TagsRedactionMode.none: 'No redaction',
@@ -121,7 +121,7 @@ class RedactionSettingsPage extends StatelessWidget {
                   ),
                   _buildDropdownTile<IconRedactionMode>(
                     context,
-                    title: 'Icon',
+                    title: '图标',
                     value: AppSettings().iconRedactionMode,
                     items: const {
                       IconRedactionMode.none: 'No redaction',
